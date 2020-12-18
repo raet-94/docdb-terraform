@@ -6,8 +6,7 @@ variable "AWS_SECRET_KEY" {
 variable "name" { 
 }
 
-variable "AWS_REGION" { 
-}
+
 
 variable "AWS_REGION" { 
 }
