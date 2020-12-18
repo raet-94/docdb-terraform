@@ -4,7 +4,7 @@
 #}
 
 resource "aws_docdb_cluster" "default" {
-  cluster_identifier      = "tf-${var.name}"
+  cluster_identifier      = "tf-${var.name}-cluster"
   engine                  = "docdb"
   master_username         = "foo"
   master_password         = "mustbeeightchars"
