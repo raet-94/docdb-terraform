@@ -18,3 +18,7 @@ variable "sg_id" {
   
 }
 
+variable "vpc_public_subnets" {
+  
+}
+

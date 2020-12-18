@@ -21,7 +21,7 @@ resource "aws_security_group" "service" {
 
   ingress {
     from_port   = 0
-    to_port     = 27017
+    to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -36,10 +36,10 @@ resource "aws_security_group" "service" {
 resource "aws_security_group_rule" "allow_all" {
   type              = "ingress"
   to_port           = 27017
-  protocol          = "-1"
+  protocol          = "0"
   #prefix_list_ids   = [aws_vpc_endpoint.my_endpoint.prefix_list_id]
   from_port         = 0
-  security_group_id = "${resource.aws_security_group.service.id}"
+  security_group_id = "${aws_security_group.service.id}"
   source_security_group_id= "${var.sg_id}"
   description= "Allow communication from de sg ${var.sg_id}"
  
@@ -63,10 +63,10 @@ resource "aws_security_group_rule" "allow_all" {
 resource "aws_security_group_rule" "allow_all_sg_1" {
   type              = "ingress"
   to_port           = 27017
-  protocol          = "-1"
+  protocol          = "0"
   #prefix_list_ids   = [aws_vpc_endpoint.my_endpoint.prefix_list_id]
   from_port         = 0
-  security_group_id = "${resource.aws_security_group.sg_id}"
+  security_group_id = "${aws_security_group.sg_id}"
   source_security_group_id= "${var.sg_id}"
   description= "Allow communication from de sg ${var.sg_id}"
   }
