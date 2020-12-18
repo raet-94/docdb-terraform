@@ -1,0 +1,6 @@
+AWS_ACCESS_KEY="<your-access-key>"
+AWS_SECRET_KEY="<your-secret-key>"
+AWS_REGION="us-west-2"
+name ="default-name"
+sg_id ="security_group_id"
+vpc_id="vpc id"

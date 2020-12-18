@@ -16,12 +16,12 @@
 #}
 
 resource "aws_security_group" "service" {
-  name        = "tf-${var.name}"
-  vpc_id      = "${module.vpc.vpc_id}"
+  name        = "tf-${var.name}-sg"
+  vpc_id      = "${var.vpc_id}"
 
   ingress {
     from_port   = 0
-    to_port     = 0
+    to_port     = 27017
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -33,12 +33,40 @@ resource "aws_security_group" "service" {
     cidr_blocks     = ["0.0.0.0/0"]
   }
 }
-
 resource "aws_security_group_rule" "allow_all" {
-  type              = "egress"
-  to_port           = 0
+  type              = "ingress"
+  to_port           = 27017
   protocol          = "-1"
-  prefix_list_ids   = [aws_vpc_endpoint.my_endpoint.prefix_list_id]
+  #prefix_list_ids   = [aws_vpc_endpoint.my_endpoint.prefix_list_id]
   from_port         = 0
-  security_group_id = "${module.aws_security_group.aws_security_group_id}"
+  security_group_id = "${resource.aws_security_group.service.id}"
+  source_security_group_id= "${var.sg_id}"
+  description= "Allow communication from de sg ${var.sg_id}"
+ 
+  #  type= "ingress"
+  #  to_port= 443
+  #  cidr_blocks= []
+  #  description= "Allow pods to communicate with the EKS cluster API."
+  #  from_port= 443
+  #  security_group_id= "sgrule-2719853536"
+  #  ipv6_cidr_blocks= []
+  #  prefix_list_ids= []
+  #  protocol= "tcp"
+  #  security_group_id= "sg-015c598c3c7504893"
+  #  self= false
+  #  source_security_group_id= "sg-01e27000528ada6be"
+    
+    
+          
 }
+
+resource "aws_security_group_rule" "allow_all_sg_1" {
+  type              = "ingress"
+  to_port           = 27017
+  protocol          = "-1"
+  #prefix_list_ids   = [aws_vpc_endpoint.my_endpoint.prefix_list_id]
+  from_port         = 0
+  security_group_id = "${resource.aws_security_group.sg_id}"
+  source_security_group_id= "${var.sg_id}"
+  description= "Allow communication from de sg ${var.sg_id}"
+  }
